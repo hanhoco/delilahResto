@@ -38,8 +38,8 @@ router.get('/usuarios', verificarToken, (req, res) =>{
     });
 });
 
-// post
-router.post('/usuarios/', verificarToken, async(req, res) =>{
+// post - crear
+router.post('/usuarios', async(req, res) =>{
     try{
         const {idusuarios, nombreApellido, email, telefono, direccion, contraseña, rol, usuario, numeroDocumento}=req.body;
         const query = "INSERT INTO Usuarios (idusuarios, nombreApellido, email, telefono, direccion, contraseña, rol, usuario, numeroDocumento)" +
@@ -130,7 +130,5 @@ router.put('/usuarios/:idusuarios', async(req, res) =>{
     }
 
 });
-
-
 
 module.exports = router;

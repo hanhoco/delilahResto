@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const secretkey = 'hanhoco';
 const mysqlConnection = require('../basedatos.js');
 
-
 //get
 router.get('/pedidos', verificarToken, (req, res) =>{
     console.log("estoy aqui");
@@ -42,12 +41,24 @@ router.get('/pedidos', verificarToken, (req, res) =>{
 router.post('/pedidos/', verificarToken, async(req, res) =>{
     try{
         jwt.verify(req.token, secretkey, (err, authData) => {
-            console.log(authData);
-            const {idpedidos, fechaHora, estadoOrden, tipoPago,valorTotal, Usuarios_idusuarios}=req.body;
-            const query = "INSERT INTO Pedidos (idpedidos, fechaHora, estadoOrden, tipoPago,valorTotal, Usuarios_idusuarios)" +` VALUES (${idpedidos},'${fechaHora}', ${estadoOrden}, '${tipoPago}', ${valorTotal},'${Usuarios_idusuarios}')`;
-            mysqlConnection.query(query, (err, rows, fields) =>{
+            const {fechaHora, estadoOrden, tipoPago,valorTotal, Usuarios_idusuarios, Productos_idProductos}=req.body;
+            const query = "INSERT INTO Pedidos (fechaHora, estadoOrden, tipoPago, valorTotal,Usuarios_idusuarios)" +` VALUES ('${fechaHora}', '${estadoOrden}', '${tipoPago}', ${valorTotal},${Usuarios_idusuarios})`;
+
+            mysqlConnection.query(query, (err, res) =>{
             if(!err) {
-                console.log("exitoso");
+                let idPedido = res.insertId;
+                console.log("exitoso inserción pedidos", idPedido);
+
+                Productos_idProductos.forEach(productos => {
+                    const query3 = "INSERT INTO Pedidos_has_Productos (Pedidos_idpedidos, Productos_idProductos)" +` VALUES (${idPedido}, ${productos})`;
+                    mysqlConnection.query(query3, (err, rows, fields) =>{
+                        if(!err) {
+                            console.log("exitoso");
+                        }else{
+                            console.log(err);
+                        }
+                    });
+                });
             }else{
                 console.log(err);
             }
