@@ -106,6 +106,39 @@ router.put('/pedidos/:idpedidos', verificarToken, async(req, res) =>{
     }
 
 });
+
+//borrar un producto de un Pedido
+router.delete('/pedidos/', verificarToken , async(req, res) =>{
+    try{
+        jwt.verify(req.token, secretkey, (err, authData) => {
+            console.log(authData);
+            if(authData.user.rol==="admin"){
+                const {pedidos_idpedidos, productos_idproductos}=req.body
+                mysqlConnection.query("DELETE FROM Pedidos_has_Productos WHERE pedidos_idpedidos ='"+pedidos_idpedidos+"'and productos_idproductos='"+productos_idproductos+"'", (err, res) =>{
+                    if(!err) {                
+                        console.log("producto borrado exitosamente");
+                    }else{
+                        console.log(err);
+                    }
+                });
+            }else{
+                console.log("no tienes permisos para borrar pedido")
+            }
+        });
+    }catch(error){
+        console.log(error);
+        res.status(400);
+        res.json({
+            message: "No se puede eliminar pedido"
+        });
+    }
+
+});
+
+
+
+
+
 //verificarToken
 function verificarToken(req, res, next){
     //Get auth header value

@@ -81,7 +81,7 @@ router.put('/productos/:idproductos', verificarToken , async(req, res) =>{
 });
 
 
-
+/* 
 //eliminar
 router.delete('/productos/:idproductos', verificarToken , async(req, res) =>{
     try{
@@ -109,7 +109,7 @@ router.delete('/productos/:idproductos', verificarToken , async(req, res) =>{
         });
     }
 
-});
+}); */
 
 //verificarToken
 function verificarToken(req, res, next){
