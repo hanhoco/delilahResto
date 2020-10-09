@@ -11,78 +11,85 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema delilahResto
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `delilahResto` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `delilahResto` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `delilahResto` ;
 
 -- -----------------------------------------------------
--- Table `delilahResto`.`pedidos`
+-- Table `delilahResto`.`Usuarios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `delilahResto`.`pedidos` (
-  `idpedidos` INT NOT NULL,
-  `idusuarios` INT NULL,
-  `fechaHora` DATETIME NULL,
-  `estadoOrden` VARCHAR(45) NULL,
-  `tipoPago` VARCHAR(45) NULL,
-  `valorTotal` VARCHAR(45) NULL,
-  `esCarritoCompras` VARCHAR(45) NULL,
-  PRIMARY KEY (`idpedidos`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `delilahResto`.`usuarios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `delilahResto`.`usuarios` (
-  `idusuarios` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `delilahResto`.`Usuarios` (
+  `idusuarios` INT NOT NULL AUTO_INCREMENT,
   `nombreApellido` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `telefono` INT NOT NULL,
   `direccion` VARCHAR(45) NOT NULL,
-  `contrasena` VARCHAR(45) NOT NULL,
+  `contraseña` VARCHAR(8) NOT NULL,
   `rol` VARCHAR(45) NOT NULL,
-  `pedidos_idpedidos` INT NOT NULL,
+  `usuario` VARCHAR(45) NOT NULL,
+  `numeroDocumento` INT NOT NULL,
   PRIMARY KEY (`idusuarios`),
-  INDEX `fk_usuarios_pedidos_idx` (`pedidos_idpedidos` ASC) VISIBLE,
-  CONSTRAINT `fk_usuarios_pedidos`
-    FOREIGN KEY (`pedidos_idpedidos`)
-    REFERENCES `delilahResto`.`pedidos` (`idpedidos`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  UNIQUE INDEX `usuario_UNIQUE` (`usuario` ASC) VISIBLE,
+  UNIQUE INDEX `numeroDocumento_UNIQUE` (`numeroDocumento` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 10
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `delilahResto`.`productos`
+-- Table `delilahResto`.`Pedidos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `delilahResto`.`productos` (
-  `idproductos` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `delilahResto`.`Pedidos` (
+  `idpedidos` INT NOT NULL AUTO_INCREMENT,
+  `fechaHora` DATETIME NOT NULL,
+  `estadoOrden` VARCHAR(45) NOT NULL,
+  `tipoPago` VARCHAR(45) NOT NULL,
+  `valorTotal` INT NOT NULL,
+  `Usuarios_idusuarios` INT NOT NULL,
+  PRIMARY KEY (`idpedidos`, `Usuarios_idusuarios`),
+  INDEX `fk_Pedidos_Usuarios1_idx` (`Usuarios_idusuarios` ASC) VISIBLE,
+  CONSTRAINT `fk_Pedidos_Usuarios1`
+    FOREIGN KEY (`Usuarios_idusuarios`)
+    REFERENCES `delilahResto`.`Usuarios` (`idusuarios`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 27
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `delilahResto`.`Productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `delilahResto`.`Productos` (
+  `idProductos` INT NOT NULL AUTO_INCREMENT,
   `nombrePlato` VARCHAR(45) NOT NULL,
-  `precio` VARCHAR(45) NOT NULL,
-  `descripcion` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idproductos`))
-ENGINE = InnoDB;
+  `precio` INT NOT NULL,
+  `descripcion` TEXT NOT NULL,
+  PRIMARY KEY (`idProductos`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `delilahResto`.`pedidos_has_productos`
+-- Table `delilahResto`.`Pedidos_has_Productos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `delilahResto`.`pedidos_has_productos` (
-  `pedidos_idpedidos` INT NOT NULL,
-  `productos_idproductos` INT NOT NULL,
-  PRIMARY KEY (`pedidos_idpedidos`, `productos_idproductos`),
-  INDEX `fk_pedidos_has_productos_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
-  INDEX `fk_pedidos_has_productos_pedidos1_idx` (`pedidos_idpedidos` ASC) VISIBLE,
-  CONSTRAINT `fk_pedidos_has_productos_pedidos1`
-    FOREIGN KEY (`pedidos_idpedidos`)
-    REFERENCES `delilahResto`.`pedidos` (`idpedidos`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pedidos_has_productos_productos1`
-    FOREIGN KEY (`productos_idproductos`)
-    REFERENCES `delilahResto`.`productos` (`idproductos`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `delilahResto`.`Pedidos_has_Productos` (
+  `Productos_idProductos` INT NOT NULL,
+  `Pedidos_idpedidos` INT NOT NULL,
+  PRIMARY KEY (`Productos_idProductos`, `Pedidos_idpedidos`),
+  INDEX `fk_Pedidos_has_Productos_Productos1_idx` (`Productos_idProductos` ASC) VISIBLE,
+  INDEX `fk_Pedidos_has_Productos_Pedidos1_idx` (`Pedidos_idpedidos` ASC) VISIBLE,
+  CONSTRAINT `fk_Pedidos_has_Productos_Pedidos1`
+    FOREIGN KEY (`Pedidos_idpedidos`)
+    REFERENCES `delilahResto`.`Pedidos` (`idpedidos`),
+  CONSTRAINT `fk_Pedidos_has_Productos_Productos1`
+    FOREIGN KEY (`Productos_idProductos`)
+    REFERENCES `delilahResto`.`Productos` (`idProductos`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
