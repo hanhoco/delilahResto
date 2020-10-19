@@ -14,6 +14,10 @@ node index.js
 
 después de ejecutarlo el servidor estará corriendo en http://localhost:3000/
 
+/////////////// Colección Postman Disponible /////////////
+           delilahResto.postman_collection.json
+/////////////////////////////////////////////////////////
+
 
 END POINTS
 
