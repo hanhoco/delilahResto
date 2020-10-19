@@ -17,7 +17,7 @@ router.get('/productos', (req, res) =>{
 
 });
 
-// post
+// post - crear producto
 
 router.post('/productos/', verificarToken, async(req, res) =>{
     try{
@@ -47,7 +47,7 @@ router.post('/productos/', verificarToken, async(req, res) =>{
     }
 });
 
-//modificar 
+//modificar producto
 router.put('/productos/:idproductos', verificarToken , async(req, res) =>{
     try{
         jwt.verify(req.token, secretkey, (err, authData) => {

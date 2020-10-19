@@ -41,6 +41,16 @@ Ejemplo:
 Resumen: Actualiza pedido
 Parámetros: fechaHora, estadoOrden, tipoPago, valorTotal, Usuarios_idusuarios, Productos_idProductos
 
+
+•	[Put] localhost:3000/pedidos/estado/:idpedidos
+Resumen: Actualiza estado de pedido
+Parámetros:Token, estadoOrden, idpedidos
+Ejemplo: 
+{
+    "estadoOrden":"en Preparacion"
+}
+
+
 •	[Delete] localhost:3000/pedidos/
 Resumen: elimina un producto de un pedido
 Parámetros: pedidos_idpedidos, productos_idproductos

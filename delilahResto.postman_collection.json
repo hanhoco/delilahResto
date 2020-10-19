@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "b4ae49cf-bb1e-4ef1-b62d-0c8350db08d4",
+		"name": "delilahResto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "http://localhost:3000/productos/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiaGFuaG9jb0BnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiJ9LCJpYXQiOjE2MDMwNjg5NTV9.GmAt21a8dm-fl0FOW0TRA7Wenan_AuxZNzilkw131iA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idproductos\":\"11\",\n    \"nombrePlato\":\"pasta atun con pollo\",\n    \"precio\":\"10000\",\n    \"descripcion\":\"atun con pollo con mucha salsa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/productos/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productos",
+								""
+							]
+						},
+						"description": "Creación de productos requiere token"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productos"
+							]
+						},
+						"description": "obtener lista de productos, no requiere token"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/productos/1",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiaGFuaG9jb0BnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiJ9LCJpYXQiOjE2MDMwNjg5NTV9.GmAt21a8dm-fl0FOW0TRA7Wenan_AuxZNzilkw131iA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombrePlato\":\"Arroz con POLLOO\", \n    \"precio\":\"50000\",\n    \"descripcion\":\"arroz con mucho pollo y verduras\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/productos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productos",
+								"1"
+							]
+						},
+						"description": "actualizar producto, requiere token administrador"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "http://localhost:3000/usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idusuarios\":\"9\", \n    \"nombreApellido\":\"carden hooker bryan\", \n    \"email\":\"chooker@gmail.com\", \n    \"telefono\":\"51259\", \n    \"direccion\":\"cabanas altamar\", \n    \"contraseña\":\"15241\", \n    \"rol\":\"cliente\", \n    \"usuario\":\"chooker\", \n    \"numeroDocumento\":\"15241402\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuarios"
+							]
+						},
+						"description": "creación de usuario sin necesidad de token, tipos de rol: cliente\n         admin"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"skarlester@gmail.com\",\n    \"contrasena\":\"4567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						},
+						"description": "login y obtencion de token, usuario debe esta creado en base de datos."
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiaGFuaG9jb0BnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiJ9LCJpYXQiOjE2MDMwNjg5NTV9.GmAt21a8dm-fl0FOW0TRA7Wenan_AuxZNzilkw131iA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuarios"
+							]
+						},
+						"description": "muestra informaciones de usuarios requiere token, si es administrador muestra información de todos los usuarios registrados si no lo es sólo los datos del usuario que lo consulta"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "http://localhost:3000/pedidos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2thcmxlc3RlckBnbWFpbC5jb20iLCJyb2wiOiJjbGllbnRlIn0sImlhdCI6MTYwMjE5NDM5N30.Zja9AvaItmdg5QgxxCXoRlETMfDrRIbcWQi62BhR5DM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"fechaHora\":\"2020-10-08 22:00:00\",\n   \"estadoOrden\":\"nuevo\", \n   \"tipoPago\":\"credito\",\n   \"valorTotal\":\"50000\",\n   \"Usuarios_idusuarios\": \"7\",\n   \"Productos_idProductos\":[1,2]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pedidos"
+							]
+						},
+						"description": "creación de pedido,requiere token"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/pedidos",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiaGFuaG9jb0BnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiJ9LCJpYXQiOjE2MDIxOTc4MTB9.mobo4JM14FUCuROACAWiXSEdvPwQsoTqm2GZohdnc8o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"pedidos_idpedidos\":\"26\", \n   \"productos_idproductos\":\"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pedidos"
+							]
+						},
+						"description": "borrar producto de pedido requiere token de admin"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/productos/1",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiaGFuaG9jb0BnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiJ9LCJpYXQiOjE2MDMwNjg5NTV9.GmAt21a8dm-fl0FOW0TRA7Wenan_AuxZNzilkw131iA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"estadoOrden\":\"en Preparacion\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/pedidos/estado/26",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"pedidos",
+								"estado",
+								"26"
+							]
+						},
+						"description": "actualizar eastado de pedido, requiere token admin como parametro"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

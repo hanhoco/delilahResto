@@ -88,7 +88,7 @@ router.put('/pedidos/:idpedidos', verificarToken, async(req, res) =>{
                 
                 const query = "UPDATE Pedidos SET idpedidos = ?, fechaHora = ?, estadoOrden = ?, tipoPago = ?, valortTotal = ?,Usuarios_idusuarios = ? WHERE idpedidos = ?";
 
-                mysqlConnection.query(query, [parseint(idpedidos), fechaHora, estadoOrden, tipoPago, parseint(valorTotal), parseInt(Usuarios_idusuarios)], (err, res) =>{
+                mysqlConnection.query(query, [parseInt(idpedidos), fechaHora, estadoOrden, tipoPago, parseInt(valorTotal), parseInt(Usuarios_idusuarios)], (err, res) =>{
                     if(!err) {
                         console.log("exitoso");
                     }else{
@@ -106,6 +106,43 @@ router.put('/pedidos/:idpedidos', verificarToken, async(req, res) =>{
     }
 
 });
+
+//modificar sólo el estado del pedido
+
+router.put('/pedidos/estado/:idpedidos', verificarToken, async(req, res) =>{
+    try{
+        jwt.verify(req.token, secretkey, (err, authData) => {
+            if(authData.user.rol==="admin"){
+                
+                const {estadoOrden}=req.body;
+                
+                const id=req.params.idpedidos;
+                
+                const query = "UPDATE Pedidos SET estadoOrden = ? WHERE idpedidos = ?";
+
+                mysqlConnection.query(query, [estadoOrden,parseInt(id)], (err, res) =>{
+                    if(!err) {
+                        console.log("exitoso");
+                    }else{
+                        console.log(err);
+                    }
+                });
+            }
+        });
+    }catch(error){
+        console.log(error);
+        res.status(400);
+        res.json({
+            message: "No se puede modificar estado orden pedido"
+        });
+    }
+
+});
+
+
+
+
+
 
 //borrar un producto de un Pedido
 router.delete('/pedidos/', verificarToken , async(req, res) =>{

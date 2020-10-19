@@ -86,17 +86,23 @@ router.post('/login',(req, res)=>{
     const query ="SELECT * FROM Usuarios WHERE email='"+email+"' and contraseña='"+contrasena+"'";
     mysqlConnection.query(query, (err, rows, fields) =>{
         if(!err) {
-            console.log("consulta exitoso");
+            console.log("consulta exitoso", rows.length);
             if (rows.length !== 0) {
                 const user = {
                     email: email,
                     rol: rows[0].rol
                 }
                 jwt.sign({user:user}, secretkey, (err, token) => {
+                    console.log('TOken', token)
                     res.json({
                         token:token
                     });
                 });
+            }
+            else {
+                res.json({
+                    error: 'Wrong login data'
+                })
             }
         }else{
             console.log(err);
@@ -125,7 +131,7 @@ router.put('/usuarios/:idusuarios', async(req, res) =>{
         console.log(error);
         res.status(400);
         res.json({
-            message: "No se puede crear usuario"
+            message: "No se puede crear modifica usuario"
         });
     }
 
